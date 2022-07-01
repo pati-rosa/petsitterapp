@@ -13,9 +13,9 @@ import PetCare from '../../assets/animal-care.png';
 export const Login = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle={'dark-content'} backgroundColor="#F5F5F5" />
+      <StatusBar barStyle={'dark-content'} backgroundColor="white" />
       <View style={styles.containerText}>
-        <Text style={styles.title}>Pet Sitter</Text>
+        <Text style={styles.title}>Babá de animais</Text>
         <Text style={styles.subtitle}>
           Seu monitoramento de animais a distancia{' '}
         </Text>
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'white',
   },
   containerText: {
     display: 'flex',

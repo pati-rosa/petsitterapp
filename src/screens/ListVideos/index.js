@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import {getVideosList} from '../../service';
 
-export const ListVideos = () => {
+export const ListVideos = ({navigation}) => {
   const [state, setState] = useState('loading');
   const [videos, setVideos] = useState([]);
-
-  console.log('STATE', state);
 
   const getVideos = async () => {
     try {
@@ -23,53 +28,60 @@ export const ListVideos = () => {
 
   const Loading = () => {
     return (
-      <View style={styles.container}>
-        {/* <Video
-          source={{uri: 'http://192.168.18.2:8080/downloadvideo'}}
-          style={styles.backgroundVideo}
-        /> */}
-        <Text style={{fontSize: 16, color: 'black'}}>Buscando vídeos</Text>
+      <View style={styles.contentCenter}>
+        <Text style={styles.text}>Buscando vídeos</Text>
       </View>
     );
   };
 
   const Error = () => {
     return (
-      <View style={styles.container}>
-        {/* <Video
-          source={{uri: 'http://192.168.18.2:8080/downloadvideo'}}
-          style={styles.backgroundVideo}
-        /> */}
-        <Text style={{fontSize: 16, color: 'black'}}>Erro ao buscar vídeo</Text>
+      <View style={styles.contentCenter}>
+        <Text style={styles.text}>Erro ao buscar vídeo</Text>
       </View>
     );
   };
 
   const Videos = () => {
-    console.log('VIDEOS', videos);
-    return videos.map(video => {
+    const renderItem = ({item}) => {
       return (
-        <View>
-          <Text>{video}</Text>
-        </View>
+        <TouchableOpacity
+          style={styles.cardVideo}
+          onPress={() => navigation.navigate('Player')}>
+          <Text>{item}</Text>
+        </TouchableOpacity>
       );
-    });
+    };
+
+    return (
+      <View>
+        <FlatList
+          data={videos}
+          renderItem={renderItem}
+          keyExtractor={item => item}
+        />
+      </View>
+    );
   };
 
-  return {
-    loading: <Loading />,
-    videos: <Videos />,
-    error: <Error />,
-  }[state];
+  return (
+    <SafeAreaView style={styles.container}>
+      {
+        {
+          loading: <Loading />,
+          videos: <Videos />,
+          error: <Error />,
+        }[state]
+      }
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#F5F5F5',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: 'white',
   },
   backgroundVideo: {
     position: 'absolute',
@@ -77,5 +89,21 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+  },
+  cardVideo: {
+    backgroundColor: '#F5F5F5',
+    padding: 10,
+    margin: 10,
+    shadowColor: 'black',
+    elevation: 5,
+  },
+  contentCenter: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: 16,
+    color: 'black',
   },
 });
