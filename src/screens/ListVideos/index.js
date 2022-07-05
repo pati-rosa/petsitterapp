@@ -47,7 +47,11 @@ export const ListVideos = ({navigation}) => {
       return (
         <TouchableOpacity
           style={styles.cardVideo}
-          onPress={() => navigation.navigate('Player')}>
+          onPress={() =>
+            navigation.navigate('Player', {
+              video: item,
+            })
+          }>
           <Text>{item}</Text>
         </TouchableOpacity>
       );

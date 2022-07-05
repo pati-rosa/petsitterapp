@@ -2,11 +2,14 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Video from 'react-native-video';
 
-export const Player = ({navigation}) => {
+export const Player = ({navigation, route}) => {
+  const {video} = route.params;
+  console.log('VIDEO', video);
+
   return (
     <View style={styles.container}>
       <Video
-        source={{uri: 'http://192.168.18.2:8080/videos/video2.mp4'}}
+        source={{uri: `http://192.168.18.2:8080/videos/${video}`}}
         style={styles.backgroundVideo}
       />
       <View style={styles.containerButton}>
@@ -24,7 +27,6 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   backgroundVideo: {
-    backgroundColor: 'black',
     position: 'absolute',
     top: 0,
     left: 0,
